@@ -1,0 +1,16 @@
+{
+  "name": "simple-website",
+  "version": "1.0.0",
+  "description": "A simple website project with dynamic functionality and styles.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "live-server public",
+    "build": "echo 'Build step can be added here.'"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
