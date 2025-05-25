@@ -1,7 +1,5 @@
 # Dice Recognition Software (working title) – Rozpoznawanie kości RPG i ich wyników
 
-Projekt na przedmiot **Inteligencja Obliczeniowa**.
-
 Celem aplikacji jest automatyczne rozpoznawanie rodzaju kości wielościennych (D4, D6, D8, D10, D12, D20) oraz wartości wyrzuconych na ich ściankach, przy użyciu algorytmów rozpoznawania obrazu i uczenia maszynowego.
 
 ---
@@ -55,6 +53,6 @@ To zdjęcie przedstawia kość D20 z wynikiem 17 z zestawu nr 3.
 
 ## Autorzy
 
-Projekt realizowany jako część kursu **Inteligencja Obliczeniowa** przez:
+Projekt realizowany w ramach przedmiotu **Inteligencja Obliczeniowa** przez:
 - Szymon Ligenza, github: [Logenz0202](https://github.com/Logenz0202)
 - Bartosz Stromski, github: [Sacharow](https://github.com/Sacharow)
