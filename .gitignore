@@ -1,0 +1,52 @@
+# === GLOBAL ===
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*.ipynb_checkpoints/
+env/
+venv/
+*.env
+
+# === NODE.JS / REACT ===
+app/node_modules/
+app/.env
+app/build/
+app/dist/
+app/.parcel-cache/
+app/.next/
+app/.turbo/
+
+# === IDEA / VS CODE ===
+.idea/
+.vscode/
+
+# === ML ARTIFACTS ===
+machine_learning/models/
+machine_learning/dataset/raw/
+machine_learning/dataset/augmented/
+machine_learning/dataset/resized/
+
+# Checkpoints or experiment logs (e.g., TensorBoard, Weights & Biases)
+*.ckpt
+*.pth
+*.pt
+*.h5
+*.tflite
+*.onnx
+*.log
+wandb/
+
+# === OS-SPECIFIC ===
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+ehthumbs.db
+Desktop.ini
