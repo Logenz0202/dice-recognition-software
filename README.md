@@ -41,8 +41,8 @@ To zdjęcie przedstawia kość D20 z wynikiem 17 z zestawu nr 3.
 
 ## Etapy projektu
 
-- [ ] Zebranie i oznaczenie danych (obrazy kości różnych typów i zestawów)
-- [ ] Augmentacja danych
+- [X] Zebranie i oznaczenie danych (obrazy kości różnych typów i zestawów)
+- [X] Augmentacja danych
 - [ ] Rozpoznawanie liczby (klasyfikacja cyfr)
 - [ ] Rozpoznawanie typu kości (klasyfikacja kształtu)
 - [ ] Budowa i trenowanie końcowego modelu CNN
