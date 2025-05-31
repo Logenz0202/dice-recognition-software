@@ -1,8 +1,8 @@
 import cv2
 import os
 
-INPUT_DIR = "../dataset/raw"
-OUTPUT_DIR = "../dataset/resized"
+INPUT_DIR = "../../dataset/raw"
+OUTPUT_DIR = "../../dataset/resized"
 TARGET_SIZE = (256, 256)
 QUALITY = 85
 

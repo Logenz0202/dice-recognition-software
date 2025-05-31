@@ -3,8 +3,8 @@ import os
 import albumentations as A
 
 # SETTINGS
-INPUT_DIR = "../dataset/resized"
-OUTPUT_DIR = "../dataset/augmented"
+INPUT_DIR = "../../dataset/resized"
+OUTPUT_DIR = "../../dataset/augmented"
 AUGS_PER_IMAGE = 10
 
 # Create output directory if needed
