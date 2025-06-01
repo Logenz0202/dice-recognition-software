@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.className = 'dice-image-alt';
                 img.src = URL.createObjectURL(file);
             }
-
+            
             // WHOLE DICE DETECTION LOGIC IS GOING TO BE HERE INSTEAD OF THE TIMEOUT
             // ---------------
             const detector = document.getElementsByClassName('detector')[0];
@@ -40,7 +40,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 detector.textContent = result;
             }, 2000);
             // ---------------
+            
+            /*
+            const detector = document.getElementsByClassName('detector')[0];
+            detector.textContent = 'Detecting...';
 
-        }
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('http://localhost:5000/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                detector.textContent = 'Detected: ' + data.prediction;
+            })
+            .catch(() => {
+                detector.textContent = 'Detection failed!';
+            });
+            */
+            }
     });
 });

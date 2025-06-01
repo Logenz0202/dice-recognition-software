@@ -26,14 +26,12 @@ app/.turbo/
 .vscode/
 
 # === ML ARTIFACTS ===
-machine_learning/models/
 machine_learning/dataset/raw/
 machine_learning/dataset/augmented/
 machine_learning/dataset/resized/
 
 # Checkpoints or experiment logs (e.g., TensorBoard, Weights & Biases)
 *.ckpt
-*.pth
 *.pt
 *.h5
 *.tflite
