@@ -11,22 +11,31 @@ Celem aplikacji jest automatyczne rozpoznawanie rodzaju kości wielościennych (
   - wartości wyrzuconej (liczby na ściance)
 - Użycie **konwolucyjnej sieci neuronowej (CNN)** trenowanej na niestandardowym zbiorze zdjęć.
 - Dane treningowe:
-  - Zdjęcia z 5 różnych zestawów kości (różne czcionki, materiały, kolory)
+  - Zdjęcia z 5 różnych zestawów kości (różne materiały i kolory)
   - Augmentacja (obrót, rozmycie, kontrast, jasność, szum itd.)
 - Możliwość integracji z aplikacjami RPG jako inteligentny licznik rzutów.
 
 ---
 
-## Struktura zbioru danych
+## Struktura projektu i zbioru danych
 
-Każdy plik ma nazwę w formacie:
+Każde oryginalne zdjęcie ma nazwę w formacie:
 
 ```
 [dice_type]_[face_value]_[set_id]_[img_id].jpg
 ```
 
-**Przykład:** `d20_17_set3_004.jpg`  
-To zdjęcie przedstawia kość D20 z wynikiem 17 z zestawu nr 3.
+**Przykład:**  
+`d20_17_set3_004.jpg` – To zdjęcie przedstawia kość D20 z wynikiem 17 z zestawu nr 3.
+
+Dodatkowo, **dla każdego zdjęcia wygenerowano 10 wersji poprzez augmentację**, których nazwy zawierają sufiks:
+
+```
+..._aug[1-10].jpg
+```
+
+**Przykład:**  
+`d20_17_set3_004_aug3.jpg` – Trzeci wariant wspomnianego wcześniej zdjęcia.
 
 ---
 
@@ -51,8 +60,19 @@ To zdjęcie przedstawia kość D20 z wynikiem 17 z zestawu nr 3.
 
 ---
 
+## Dalsze plany
+
+- Rozpoznawanie **wielu kości jednocześnie** na jednym zdjęciu
+- Umożliwienie użytkownikowi wykonywania operacji na wynikach, takich jak:
+  - **Sumowanie wartości** ze wszystkich wyrzuconych kości lub tylko konkretnego typu
+  - **Wybieranie najwyższego/najniższego wyniku** z rzutu
+- Dodanie opcji **filtrowania wyników według typu kości**
+- Wprowadzenie **interfejsu API lub integracji z aplikacjami RPG online**, umożliwiającego np. przesyłanie wyników do Roll20, Foundry VTT itp.
+
+---
+
 ## Autorzy
 
 Projekt realizowany w ramach przedmiotu **Inteligencja Obliczeniowa** przez:
-- Szymon Ligenza, github: [Logenz0202](https://github.com/Logenz0202)
-- Bartosz Stromski, github: [Sacharow](https://github.com/Sacharow)
+- Szymon Ligenza, GitHub: [Logenz0202](https://github.com/Logenz0202)
+- Bartosz Stromski, GitHub: [Sacharow](https://github.com/Sacharow)
