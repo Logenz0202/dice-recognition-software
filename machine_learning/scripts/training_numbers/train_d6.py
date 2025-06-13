@@ -49,7 +49,7 @@ optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
 train_acc, test_acc = [], []
 
-for epoch in range(10):
+for epoch in range(30):
     model.train()
     correct = total = 0
     for imgs, labels in train_loader:
