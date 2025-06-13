@@ -8,7 +8,7 @@ from torchvision import transforms
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
-from dataset import DiceDataset
+from machine_learning.scripts.dataset import DiceDataset
 
 # Define CNN
 class DiceCNN(nn.Module):
@@ -33,7 +33,7 @@ transform = transforms.Compose([
     transforms.ToTensor(),
 ])
 
-full_dataset = DiceDataset("../dataset/augmented", dice_type="d6", transform=transform)
+full_dataset = DiceDataset("../../dataset/augmented", dice_type="d6", transform=transform)
 train_size = int(0.8 * len(full_dataset))
 test_size = len(full_dataset) - train_size
 train_ds, test_ds = random_split(full_dataset, [train_size, test_size])
@@ -111,12 +111,9 @@ plt.tight_layout()
 plt.show()
 
 # Save model
-model_dir = "../models"
+model_dir = "../../models"
 os.makedirs(model_dir, exist_ok=True)
 model_path = os.path.join(model_dir, "d6_classifier.pth")
 
 torch.save(model.state_dict(), model_path)
 print(f"\nModel saved to {model_path}")
-
-# todo: showing matrix/plot and save will be optional by user input
-# todo: or autosave only if the model was superior to its previous version
