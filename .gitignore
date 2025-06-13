@@ -29,6 +29,7 @@ app/.turbo/
 machine_learning/dataset/raw/
 machine_learning/dataset/augmented/
 machine_learning/dataset/resized/
+machine_learning/models/*.pth
 
 # Checkpoints or experiment logs (e.g., TensorBoard, Weights & Biases)
 *.ckpt

@@ -1,6 +1,11 @@
 import cv2
 import os
 
+#                        <<< WAŻNE >>>
+#
+# Ten skrypt pobiera i modyfikuje zdjęcia w kolejnośći ich utworzenia.
+# Użytkownik musi zadbać o poprawną kolejność w folderze 'raw/'.
+
 INPUT_DIR = "../../dataset/raw"
 OUTPUT_DIR = "../../dataset/resized"
 TARGET_SIZE = (256, 256)
