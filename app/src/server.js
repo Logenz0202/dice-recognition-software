@@ -1,25 +1,44 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
+const { execFile } = require('child_process');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS for all routes
 app.use(cors());
-
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Sample route
-app.get('/', (req, res) => {
-    res.json({ message: 'Hello, World!' });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); // Keeps original name and extension
+    }
 });
 
-// Dummy /detect endpoint for testing (LATER CHANGED TO REAL DETECTION LOGIC)
-app.post('/detect', (req, res) => {
-    // Return a random dice result between 1 and 6
-    const randomResult = Math.floor(Math.random() * 6) + 1;
-    res.json({ result: randomResult });
+const upload = multer({ storage: storage });
+
+app.post('/detect', upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+    const imagePath = path.resolve(req.file.path);
+
+    execFile('python', [path.join(__dirname, 'algo.py'), imagePath], (error, stdout, stderr) => {
+        // Clean up the uploaded file after processing
+        fs.unlink(imagePath, () => { });
+
+        if (error) {
+            console.error('Error running algo.py:', error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        const output = stdout.trim();
+        const [result_Number, result_Shape] = output.split(/\s+/);
+        res.json({ result_Number, result_Shape });
+    });
 });
 
 // Start the server
