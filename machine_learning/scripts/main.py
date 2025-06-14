@@ -1,3 +1,4 @@
+# main.py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -5,6 +6,8 @@ from torchvision import transforms
 from PIL import Image
 import json
 import sys
+import cv2
+import numpy as np
 
 class DiceCNN(nn.Module):
     def __init__(self, num_classes):
@@ -22,12 +25,15 @@ class DiceCNN(nn.Module):
         x = F.relu(self.fc1(x))
         return self.fc2(x)
 
-def transform_image(image):
-    transform = transforms.Compose([
-        transforms.Resize((128, 128)),
-        transforms.ToTensor(),
-    ])
-    return transform(image).unsqueeze(0)
+def transform_image(image_path):
+    TARGET_SIZE = (128, 128)
+    img = cv2.imread(image_path)
+    if img is None:
+        raise ValueError(f"Could not read image from {image_path}")
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    resized = cv2.resize(img, TARGET_SIZE, interpolation=cv2.INTER_AREA)
+    tensor = transforms.ToTensor()(resized)
+    return tensor.unsqueeze(0)
 
 def get_prediction_with_confidence(model, input_tensor):
     with torch.no_grad():
@@ -49,14 +55,13 @@ def load_model(model_path, num_classes):
 def process_image(image_path, confidence_threshold=0.7):
     try:
         # Load and preprocess image
-        img = Image.open(image_path).convert("RGB")
+        input_tensor = transform_image(image_path)
 
         # First, classify dice type
         dice_type_model = load_model("../models_push/type_classifier.pth", num_classes=6)
         if dice_type_model is None:
             return {"error": "Could not load dice type classifier model"}
 
-        input_tensor = transform_image(img)
         dice_types = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20']
         type_pred, type_conf = get_prediction_with_confidence(dice_type_model, input_tensor)
         predicted_type = dice_types[type_pred]
