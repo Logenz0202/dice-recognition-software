@@ -35,9 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const number_detector = document.getElementsByClassName('number_detector')[0];
             const shape_detector = document.getElementsByClassName('shape_detector')[0];
-            let title_detector = document.getElementsByClassName('title_detector')[0];
 
-            title_detector.textContent = `Title: ${file.name}`;
             number_detector.textContent = 'Detecting...';
             shape_detector.textContent = 'Detecting...';
 
@@ -53,8 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.result_Number && data.result_Shape) {
                         number_detector.textContent = `Detected: ${data.result_Number}`;
                         shape_detector.textContent = `Detected: ${data.result_Shape}`;
-                        // Optionally update title again if backend returns a title
-                        // title_detector.textContent = `Title: ${data.title || file.name}`;
                     } else {
                         number_detector.textContent = 'No dice detected';
                         shape_detector.textContent = 'No dice detected';
@@ -65,29 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     number_detector.textContent = 'Error detecting dice';
                     shape_detector.textContent = 'Error detecting dice';
                 });
-            // ...existing code...
-
-            /*
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/detect', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result) {
-                        detector.textContent = `Detected: ${data.result}`;
-                    } else {
-                        detector.textContent = 'No dice detected';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    detector.textContent = 'Error detecting dice';
-                });
-            */
         }
     });
 });
