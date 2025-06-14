@@ -53,17 +53,15 @@ def evaluate_model(model, test_loader, device):
 
 def is_valid_dice_type(dice_type):
     pattern = r'^d(4|6|8|10|12|20)$'
-    return bool(re.match(pattern, dice_type.lower()))
-
-
+    return bool(re.match(pattern, dice_type.lower())) or dice_type.lower() == "type"
 
 def main():
     dice_classes = {
-        'd4': 4, 'd6': 6, 'd8': 8, 'd10': 10, 'd12': 12, 'd20': 20
+        'd4': 4, 'd6': 6, 'd8': 8, 'd10': 10, 'd12': 12, 'd20': 20, 'type': 6
     }
 
     while True:
-        dice_type = input("Enter dice type (d4/d6/d8/d10/d12/d20): ").lower()
+        dice_type = input("Enter dice type (d4/d6/d8/d10/d12/d20) or 'type': ").lower()
         if is_valid_dice_type(dice_type):
             break
         print("Invalid dice type.")
@@ -71,8 +69,12 @@ def main():
     num_classes = dice_classes[dice_type]
 
     # Setup paths
-    model1_path = os.path.join('../models', f'{dice_type}_classifier.pth')
-    model2_path = os.path.join('../models_push', f'{dice_type}_classifier.pth')
+    if dice_type == "type":
+        model1_path = os.path.join('../models', 'type_classifier.pth')
+        model2_path = os.path.join('../models_push', 'type_classifier.pth')
+    else:
+        model1_path = os.path.join('../models', f'{dice_type}_classifier.pth')
+        model2_path = os.path.join('../models_push', f'{dice_type}_classifier.pth')
 
     if not (os.path.exists(model1_path) and os.path.exists(model2_path)):
         print(f'Error: Could not find both model files for {dice_type}')
@@ -93,7 +95,11 @@ def main():
     ])
 
     print("Loading dataset...")
-    dataset = DiceDataset("../dataset/augmented", dice_type=dice_type, transform=transform)
+    if dice_type == "type":
+        dataset = DiceDataset("../dataset/augmented", dice_type=dice_type, transform=transform, label_type="type")
+    else:
+        dataset = DiceDataset("../dataset/augmented", dice_type=dice_type, transform=transform)
+
     test_loader = torch.utils.data.DataLoader(dataset, batch_size=32, shuffle=True)
 
     # Evaluate both models
@@ -105,7 +111,10 @@ def main():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
 
     # Create labels for the confusion matrices
-    labels = [str(i+1) for i in range(num_classes)]
+    if dice_type == "type":
+        labels = ["d4", "d6", "d8", "d10", "d12", "d20"]
+    else:
+        labels = [str(i + 1) for i in range(num_classes)]
 
     # Plot confusion matrices
     sns.heatmap(cm1, annot=True, fmt='d', cmap='Blues', ax=ax1,
