@@ -8,24 +8,47 @@ for loading images of dice faces from a specified directory.
 """
 
 class DiceDataset(Dataset):
-    def __init__(self, root_dir, dice_type=None, transform=None):
+    DICE_TYPE_TO_IDX = {
+        "d4": 0,
+        "d6": 1,
+        "d8": 2,
+        "d10": 3,
+        "d12": 4,
+        "d20": 5
+    }
+
+    def __init__(self, root_dir, dice_type=None, transform=None, label_type="value"):
         self.images = []
         self.labels = []
         self.transform = transform
-        self.dice_type = dice_type.lower() if dice_type else None
+        self.label_type = label_type.lower()
+        self.dice_type_filter = dice_type.lower() if dice_type else None
 
         for fname in os.listdir(root_dir):
             if not fname.lower().endswith(".jpg"):
                 continue
-            if self.dice_type and not fname.lower().startswith(self.dice_type + "_"):
-                continue
 
             parts = fname.lower().split("_")
+            if len(parts) < 4:
+                print(f"Skipping malformed filename: {fname}")
+                continue
+
+            dice_type = parts[0]
+            if self.dice_type_filter and dice_type != self.dice_type_filter:
+                continue
+
             try:
-                # [type]_[face]_set[1-5]_[001-004]_aug[1-10].jpg
-                label = int(parts[1])
+                if self.label_type == "value":
+                    face_value = int(parts[1])
+                    label = face_value - 1  # zero-based
+                elif self.label_type == "type":
+                    label = self.DICE_TYPE_TO_IDX[dice_type]
+                else:
+                    raise ValueError(f"Invalid label_type: {self.label_type}")
+
                 self.images.append(os.path.join(root_dir, fname))
                 self.labels.append(label)
+
             except Exception as e:
                 print(f"Error parsing {fname}: {e}")
 
@@ -34,7 +57,7 @@ class DiceDataset(Dataset):
 
     def __getitem__(self, idx):
         img = Image.open(self.images[idx]).convert("RGB")
-        label = self.labels[idx] - 1  # 0-based labels
+        label = self.labels[idx]
         if self.transform:
             img = self.transform(img)
         return img, label
