@@ -2,11 +2,6 @@ import os
 from PIL import Image
 from torch.utils.data import Dataset
 
-"""
-This script defines a custom dataset class 
-for loading images of dice faces from a specified directory.
-"""
-
 class DiceDataset(Dataset):
     DICE_TYPE_TO_IDX = {
         "d4": 0,
@@ -22,7 +17,7 @@ class DiceDataset(Dataset):
         self.labels = []
         self.transform = transform
         self.label_type = label_type.lower()
-        self.dice_type_filter = dice_type.lower() if dice_type else None
+        self.dice_type_filter = dice_type.lower() if dice_type and dice_type != "type" else None
 
         for fname in os.listdir(root_dir):
             if not fname.lower().endswith(".jpg"):
@@ -33,8 +28,8 @@ class DiceDataset(Dataset):
                 print(f"Skipping malformed filename: {fname}")
                 continue
 
-            dice_type = parts[0]
-            if self.dice_type_filter and dice_type != self.dice_type_filter:
+            dice_type_from_file = parts[0]
+            if self.dice_type_filter and dice_type_from_file != self.dice_type_filter:
                 continue
 
             try:
@@ -42,7 +37,7 @@ class DiceDataset(Dataset):
                     face_value = int(parts[1])
                     label = face_value - 1  # zero-based
                 elif self.label_type == "type":
-                    label = self.DICE_TYPE_TO_IDX[dice_type]
+                    label = self.DICE_TYPE_TO_IDX[dice_type_from_file]
                 else:
                     raise ValueError(f"Invalid label_type: {self.label_type}")
 
