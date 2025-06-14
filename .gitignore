@@ -30,6 +30,7 @@ machine_learning/dataset/raw/
 machine_learning/dataset/augmented/
 machine_learning/dataset/resized/
 machine_learning/models/*.pth
+machine_learning/graphs/
 
 # Local script testing
 
