@@ -28,16 +28,21 @@ app.post('/detect', upload.single('file'), (req, res) => {
     const imagePath = path.resolve(req.file.path);
 
     execFile('python', [path.join(__dirname, 'algo.py'), imagePath], (error, stdout, stderr) => {
-        // Clean up the uploaded file after processing
         fs.unlink(imagePath, () => { });
 
         if (error) {
             console.error('Error running algo.py:', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
-        const output = stdout.trim();
-        const [result_Number, result_Shape] = output.split(/\s+/);
-        res.json({ result_Number, result_Shape });
+        try {
+            const output = JSON.parse(stdout.trim());
+            const result_Number = output.face_value || 'Unknown';
+            const result_Shape = output.dice_type || 'Unknown';
+            res.json({ result_Number, result_Shape });
+        } catch (e) {
+            console.error('Error parsing output:', e);
+            res.status(500).json({ error: 'Invalid output from Python script' });
+        }
     });
 });
 
