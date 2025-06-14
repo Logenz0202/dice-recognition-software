@@ -31,6 +31,11 @@ machine_learning/dataset/augmented/
 machine_learning/dataset/resized/
 machine_learning/models/*.pth
 
+# Local script testing
+
+machine_learning/dataset/batch_test/
+machine_learning/scripts/batch*
+
 # Checkpoints or experiment logs (e.g., TensorBoard, Weights & Biases)
 *.ckpt
 *.pt
