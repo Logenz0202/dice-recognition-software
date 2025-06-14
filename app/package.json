@@ -9,7 +9,9 @@
   },
   "author": "Your Name",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^5.1.0"
+  },
   "devDependencies": {
     "live-server": "^1.2.1"
   }

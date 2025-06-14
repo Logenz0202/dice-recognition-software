@@ -30,36 +30,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.className = 'dice-image-alt';
                 img.src = URL.createObjectURL(file);
             }
-            
+
             // WHOLE DICE DETECTION LOGIC IS GOING TO BE HERE INSTEAD OF THE TIMEOUT
-            // ---------------
-            const detector = document.getElementsByClassName('detector')[0];
-            detector.textContent = 'Detecting...';
-            setTimeout(() => {
-                const result = 'Detected: 6';
-                detector.textContent = result;
-            }, 2000);
-            // ---------------
-            
-            /*
+
             const detector = document.getElementsByClassName('detector')[0];
             detector.textContent = 'Detecting...';
 
+            // Simulate detection delay
+            setTimeout(() => {
+                fetch('http://localhost:3000/detect', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({}) // send empty object or relevant data
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result) {
+                            detector.textContent = `Detected: ${data.result}`;
+                        } else {
+                            detector.textContent = 'No dice detected';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        detector.textContent = 'Error detecting dice';
+                    });
+            }, 2000);
+
+            /*
             const formData = new FormData();
             formData.append('file', file);
 
-            fetch('http://localhost:5000/predict', {
+            fetch('/detect', {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json())
-            .then(data => {
-                detector.textContent = 'Detected: ' + data.prediction;
-            })
-            .catch(() => {
-                detector.textContent = 'Detection failed!';
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result) {
+                        detector.textContent = `Detected: ${data.result}`;
+                    } else {
+                        detector.textContent = 'No dice detected';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    detector.textContent = 'Error detecting dice';
+                });
             */
-            }
+        }
     });
 });
