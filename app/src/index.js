@@ -30,36 +30,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.className = 'dice-image-alt';
                 img.src = URL.createObjectURL(file);
             }
-            
+
             // WHOLE DICE DETECTION LOGIC IS GOING TO BE HERE INSTEAD OF THE TIMEOUT
-            // ---------------
-            const detector = document.getElementsByClassName('detector')[0];
-            detector.textContent = 'Detecting...';
-            setTimeout(() => {
-                const result = 'Detected: 6';
-                detector.textContent = result;
-            }, 2000);
-            // ---------------
-            
-            /*
-            const detector = document.getElementsByClassName('detector')[0];
-            detector.textContent = 'Detecting...';
+
+            const number_detector = document.getElementsByClassName('number_detector')[0];
+            const shape_detector = document.getElementsByClassName('shape_detector')[0];
+            let title_detector = document.getElementsByClassName('title_detector')[0];
+
+            title_detector.textContent = `Title: ${file.name}`;
+            number_detector.textContent = 'Detecting...';
+            shape_detector.textContent = 'Detecting...';
 
             const formData = new FormData();
             formData.append('file', file);
 
-            fetch('http://localhost:5000/predict', {
+            fetch('http://localhost:3000/detect', {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json())
-            .then(data => {
-                detector.textContent = 'Detected: ' + data.prediction;
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result_Number && data.result_Shape) {
+                        number_detector.textContent = `Detected: ${data.result_Number}`;
+                        shape_detector.textContent = `Detected: ${data.result_Shape}`;
+                        // Optionally update title again if backend returns a title
+                        // title_detector.textContent = `Title: ${data.title || file.name}`;
+                    } else {
+                        number_detector.textContent = 'No dice detected';
+                        shape_detector.textContent = 'No dice detected';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    number_detector.textContent = 'Error detecting dice';
+                    shape_detector.textContent = 'Error detecting dice';
+                });
+            // ...existing code...
+
+            /*
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/detect', {
+                method: 'POST',
+                body: formData
             })
-            .catch(() => {
-                detector.textContent = 'Detection failed!';
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result) {
+                        detector.textContent = `Detected: ${data.result}`;
+                    } else {
+                        detector.textContent = 'No dice detected';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    detector.textContent = 'Error detecting dice';
+                });
             */
-            }
+        }
     });
 });
