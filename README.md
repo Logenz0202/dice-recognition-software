@@ -52,8 +52,8 @@ Dodatkowo, **dla każdego zdjęcia wygenerowano 10 wersji poprzez augmentację**
 
 - [X] Zebranie i oznaczenie danych (obrazy kości różnych typów i zestawów)
 - [X] Augmentacja danych
-- [ ] Rozpoznawanie liczby (klasyfikacja cyfr)
-- [ ] Rozpoznawanie typu kości (klasyfikacja kształtu)
+- [X] Rozpoznawanie liczby (klasyfikacja cyfr)
+- [X] Rozpoznawanie typu kości (klasyfikacja kształtu)
 - [ ] Budowa i trenowanie końcowego modelu CNN
 - [ ] Interfejs graficzny lub CLI (opcjonalnie)
 - [ ] Ewaluacja dokładności i testy krzyżowe
