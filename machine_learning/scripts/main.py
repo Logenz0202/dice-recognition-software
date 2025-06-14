@@ -1,13 +1,10 @@
-# main.py
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import transforms
-from PIL import Image
 import json
 import sys
 import cv2
-import numpy as np
 
 class DiceCNN(nn.Module):
     def __init__(self, num_classes):
