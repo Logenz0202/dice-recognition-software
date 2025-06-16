@@ -54,9 +54,10 @@ Dodatkowo, **dla każdego zdjęcia wygenerowano 10 wersji poprzez augmentację**
 - [X] Augmentacja danych
 - [X] Rozpoznawanie liczby (klasyfikacja cyfr)
 - [X] Rozpoznawanie typu kości (klasyfikacja kształtu)
-- [ ] Budowa i trenowanie końcowego modelu CNN
-- [ ] Interfejs graficzny lub CLI (opcjonalnie)
-- [ ] Ewaluacja dokładności i testy krzyżowe
+- [X] Budowa i trenowanie końcowego modelu CNN
+- [X] Ewaluacja dokładności 
+- [ ] Testy krzyżowe
+- [X] Graficzny Interfejs
 
 ---
 
@@ -67,7 +68,7 @@ Dodatkowo, **dla każdego zdjęcia wygenerowano 10 wersji poprzez augmentację**
   - **Sumowanie wartości** ze wszystkich wyrzuconych kości lub tylko konkretnego typu
   - **Wybieranie najwyższego/najniższego wyniku** z rzutu
 - Dodanie opcji **filtrowania wyników według typu kości**
-- Wprowadzenie **interfejsu API lub integracji z aplikacjami RPG online**, umożliwiającego np. przesyłanie wyników do Roll20, Foundry VTT itp.
+- Wprowadzenie **integracji z aplikacjami RPG online**, umożliwiającego np. przesyłanie wyników do Roll20, Foundry VTT itp.
 
 ---
 
