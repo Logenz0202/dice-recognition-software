@@ -5,6 +5,7 @@ from torchvision import transforms
 import json
 import sys
 import cv2
+import os
 
 class DiceCNN(nn.Module):
     def __init__(self, num_classes):
@@ -55,7 +56,8 @@ def process_image(image_path, confidence_threshold=0.7):
         input_tensor = transform_image(image_path)
 
         # First, classify dice type
-        dice_type_model = load_model("C:/Users/bstro/OneDrive/Dokumenty/STUDIA/sem4/Projects/dice-recognition-software/machine_learning/models_push/type_classifier.pth", num_classes=6)
+        type_model_path = os.path.join(os.path.dirname(__file__), "..", "models_push", "type_classifier.pth")
+        dice_type_model = load_model(type_model_path, num_classes=6)
         if dice_type_model is None:
             return {"error": "Could not load dice type classifier model"}
 
@@ -72,8 +74,8 @@ def process_image(image_path, confidence_threshold=0.7):
 
         # Then, recognize face value
         dice_classes = {'d4': 4, 'd6': 6, 'd8': 8, 'd10': 10, 'd12': 12, 'd20': 20}
-        face_model = load_model(f"C:/Users/bstro/OneDrive/Dokumenty/STUDIA/sem4/Projects/dice-recognition-software/machine_learning/models_push/{predicted_type}_classifier.pth",
-                                dice_classes[predicted_type])
+        face_model_path = os.path.join(os.path.dirname(__file__), "..", "models_push", f"{predicted_type}_classifier.pth")
+        face_model = load_model(face_model_path, dice_classes[predicted_type])
 
         if face_model is None:
             return {"error": f"Could not load face recognition model for {predicted_type}"}

@@ -16,10 +16,10 @@ if (!fs.existsSync(uploadsDir)) {
 }
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, uploadsDir); // Use the absolute path
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // Keeps original name and extension
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
 
@@ -34,7 +34,7 @@ app.post('/detect', upload.single('file'), (req, res) => {
     execFile(
         'python',
         [
-            'C:/Users/bstro/OneDrive/Dokumenty/STUDIA/sem4/Projects/dice-recognition-software/machine_learning/scripts/main.py',
+            path.resolve(__dirname, '../../machine_learning/scripts/main.py'), // relative path
             imagePath
         ],
         (error, stdout, stderr) => {
