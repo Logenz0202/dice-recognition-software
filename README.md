@@ -56,7 +56,7 @@ Dodatkowo, **dla każdego zdjęcia wygenerowano 10 wersji poprzez augmentację**
 - [X] Rozpoznawanie typu kości (klasyfikacja kształtu)
 - [X] Budowa i trenowanie końcowego modelu CNN
 - [X] Ewaluacja dokładności 
-- [ ] Testy krzyżowe
+- [X] Testy krzyżowe
 - [X] Graficzny Interfejs
 
 ---
